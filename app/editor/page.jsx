@@ -1,27 +1,36 @@
-"use client";
-import { Puck } from "@measured/puck";
-import { config } from "@/puck.config";
-import "@measured/puck/puck.css";
-import { useRouter } from "next/navigation";
+import AddDialog from "@/components/AddDialog";
+import { getCookieData } from "@/lib/cookies";
+import axios from "axios";
+import { revalidatePath } from "next/cache";
 
-export default function Editor() {
-  const router = useRouter();
-  const initialData = {
-    content: [],
-    root: {},
-  };
-  const handlePublish = async (data) => {
+const page = async () => {
+  const getData = async () => {
     try {
-      localStorage.setItem("content", JSON.stringify(data));
-      console.log("Done");
-      router.push("/preview");
+      const cookieStore = await getCookieData();
+
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/nextpress/get-url`,
+        {
+          headers: {
+            Cookie: cookieStore,
+          },
+        }
+      );
+      return data;
     } catch (err) {
       console.log(err);
     }
   };
-  return (
-    <div className="h-screen">
-      <Puck config={config} data={initialData} onPublish={handlePublish} />
-    </div>
-  );
-}
+  const data = await getData();
+  const handleDataUpdate = async () => {
+    "use server";
+    revalidatePath("/editor");
+  };
+  if (!data) {
+    return <AddDialog onSuccess={handleDataUpdate} />;
+  }
+  const urls = data.data;
+  return <AddDialog onSuccess={handleDataUpdate} urls={urls} />;
+};
+
+export default page;
