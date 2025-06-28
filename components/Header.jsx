@@ -1,18 +1,21 @@
 "use client";
 import axios from "axios";
 import {
+  BarChart2,
   Bell,
   Calendar,
   CircleGauge,
+  HelpCircle,
   LogOut,
   Settings,
   User,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const Header = ({ user }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -28,14 +31,21 @@ const Header = ({ user }) => {
       toast.error("Server Error");
     }
   };
+  const mainMenuItems = [
+    { icon: CircleGauge, label: "Dashboard", href: "/" },
+    { icon: BarChart2, label: "Pages", href: "/all-pages" },
+    { icon: HelpCircle, label: "Help & Center", href: "/help" },
+    { icon: Settings, label: "Settings", href: "/settings" },
+  ];
+  const activeItem = mainMenuItems.filter((link) => link.href === pathname)[0];
   return (
     <div className="flex items-center justify-between rounded-2xl sticky top-2 z-[999] px-6 py-4 border border-black shadow-dark bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800 backdrop-blur-sm mb-8">
       <div className="flex items-center gap-4">
         <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm">
-          <CircleGauge className="w-6 h-6 text-white" />
+          <activeItem.icon className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h1 className="text-xl font-bold text-white">Dashboard</h1>
+          <h1 className="text-xl font-bold text-white">{activeItem.label}</h1>
           <p className="text-sm text-neutral-400">
             Project Management Overview
           </p>

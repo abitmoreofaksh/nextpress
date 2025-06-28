@@ -1,3 +1,4 @@
+"use client";
 import {
   BarChart2,
   Bell,
@@ -9,16 +10,19 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function Sidebar() {
+  const pathname = usePathname();
+
   const menuItems = [
     { icon: Search, label: "Search", href: "/search" },
     { icon: Bell, label: "Notification", href: "/notifications" },
   ];
 
   const mainMenuItems = [
-    { icon: CircleGauge, label: "Dashboard", href: "/", active: true },
-    { icon: BarChart2, label: "Pages", href: "/pages" },
+    { icon: CircleGauge, label: "Dashboard", href: "/" },
+    { icon: BarChart2, label: "Pages", href: "/all-pages" },
     { icon: HelpCircle, label: "Help & Center", href: "/help" },
     { icon: Settings, label: "Settings", href: "/settings" },
   ];
@@ -69,7 +73,7 @@ function Sidebar() {
               key={item.label}
               href={item.href}
               className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
-                item.active
+                pathname === item.href
                   ? "bg-neutral-800 border border-black text-white shadow-[inset_0px_0px_5px_0px_#171717,0px_0px_5px_0px_#171717,inset_0px_1px_1px_0px_#404040,inset_0px_-1px_1px_0px_#262626]"
                   : "text-neutral-400 border border-transparent hover:border-black hover:text-white hover:bg-neutral-800 hover:shadow-[inset_0px_0px_5px_0px_#171717,0px_0px_5px_0px_#171717,inset_0px_1px_1px_0px_#404040,inset_0px_-1px_1px_0px_#262626]"
               }`}

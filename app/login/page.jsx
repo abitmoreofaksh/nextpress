@@ -56,7 +56,7 @@ const LoginPage = () => {
 
       if (response.data.success) {
         toast.success("Login successful!");
-        router.push("/"); // Changed from router.refresh("/") to router.push("/")
+        router.refresh("/");
       }
     } catch (err) {
       if (err.response?.data?.message) {

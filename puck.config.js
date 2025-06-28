@@ -59,6 +59,7 @@ export const config = {
         text: { type: "text" },
         height: { type: "number" },
         width: { type: "number" },
+        borderRadius: { type: "number" },
       },
     },
     LinkFlip: {
