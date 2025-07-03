@@ -18,7 +18,9 @@ const AddDialog = ({ isOpen, onClose, onSuccess }) => {
 
       toast.success(data.message);
       setUrl("");
+      console.log("Calling OnSuccess");
       await onSuccess();
+      console.log("called On Success");
       onClose();
     } catch (err) {
       console.log(err);

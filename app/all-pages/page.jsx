@@ -12,7 +12,6 @@ const page = async ({ searchParams }) => {
   const getData = async () => {
     try {
       const cookieStore = await getCookieData();
-
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/nextpress/get-url?limit=${limit}&page=${page}&search=${search}`,
         {
@@ -29,7 +28,7 @@ const page = async ({ searchParams }) => {
   const pages = await getData();
   const handleDataUpdate = async () => {
     "use server";
-    revalidatePath("/");
+    revalidatePath("/all-pages");
   };
   return (
     <MainWrapper>
