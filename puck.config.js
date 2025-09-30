@@ -1,16 +1,8 @@
+import BorderRayCard from "./components/BorderRayCard";
+import Button from "./components/Button";
+import { CodeBlock } from "./components/CodeBlock";
 import FlipLink from "./components/Fliplink";
 import LayoutHeading from "./components/LayoutHeading";
-
-// Define your components
-const MyButton = ({ text, variant = "primary" }) => (
-  <button
-    className={`px-4 py-2 rounded ${
-      variant === "primary" ? "bg-blue-500 text-white" : "bg-gray-200"
-    }`}
-  >
-    {text}
-  </button>
-);
 
 const MyHeading = ({ text, level = 1 }) => {
   const Tag = `h${level}`;
@@ -41,16 +33,57 @@ const MyParagraph = ({ text }) => {
 export const config = {
   components: {
     Button: {
-      render: MyButton,
+      render: Button,
       fields: {
         text: { type: "text" },
         variant: {
           type: "select",
           options: [
-            { label: "Primary", value: "primary" },
-            { label: "Secondary", value: "secondary" },
+            { label: "Shadow", value: "Shadow" },
+            { label: "Solid", value: "Solid" },
+            { label: "Gradient Border", value: "Gradient Border" },
+            { label: "Classic Primary", value: "Classic Primary" },
+            { label: "Soft Style", value: "Soft Style" },
+            { label: "Ring Style", value: "Ring Style" },
+            { label: "3D Effect", value: "3D Effect" },
+            { label: "Cyber", value: "Cyber" },
+            { label: "Slide Effect", value: "Slide Effect" },
+            { label: "Nebula Glow", value: "Nebula Glow" },
+            { label: "Matrix", value: "Matrix" },
+            { label: "Holographic", value: "Holographic" },
+            { label: "Pulse", value: "Pulse" },
+            { label: "Geometric", value: "Geometric" },
+            { label: "Neon Frame", value: "Neon Frame" },
+            { label: "Liquid Flow", value: "Liquid Flow" },
+            { label: "Circuit", value: "Circuit" },
+            { label: "Cosmic Portal", value: "Cosmic Portal" },
+            { label: "Echo", value: "Echo" },
+            { label: "Aurora", value: "Aurora" },
+            { label: "Cyber Pulse", value: "Cyber Pulse" },
+            { label: "Neon Gradient", value: "Neon Gradient" },
+            { label: "Digital Surge", value: "Digital Surge" },
+            { label: "Energy Field", value: "Energy Field" },
+            { label: "Tech Pulse", value: "Tech Pulse" },
+            { label: "Plasma Glow", value: "Plasma Glow" },
+            { label: "Digital Matrix", value: "Digital Matrix" },
+            { label: "Cyberpunk Edge", value: "Cyberpunk Edge" },
+            { label: "Neural Network", value: "Neural Network" },
           ],
         },
+      },
+    },
+    CodeBlock: {
+      render: CodeBlock,
+      fields: {
+        filename: { type: "text" },
+        code: { type: "textarea" },
+      },
+    },
+    RayCard: {
+      render: BorderRayCard,
+      fields: {
+        heading: { type: "text" },
+        description: { type: "text" },
       },
     },
     MainHeading: {
@@ -60,6 +93,16 @@ export const config = {
         height: { type: "number" },
         width: { type: "number" },
         borderRadius: { type: "number" },
+      },
+    },
+    GridThree: {
+      render: ({ content: Content }) => {
+        return (
+          <Content className="grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto " />
+        );
+      },
+      fields: {
+        content: { type: "slot", allow: ["RayCard"] },
       },
     },
     LinkFlip: {

@@ -2,6 +2,7 @@ import axios from "axios";
 import Editor from "./Editor";
 import { cookies } from "next/headers";
 import "@measured/puck/puck.css";
+import { notFound } from "next/navigation";
 
 export default async function page({ params }) {
   const { slug } = await params;
@@ -20,6 +21,14 @@ export default async function page({ params }) {
     }
   };
   const data = await getData();
+  if (!data) {
+    return notFound();
+  }
 
-  return <Editor initialData={{ content: [], root: {} }} slug={slug} />;
+  return (
+    <Editor
+      initialData={{ content: data.data.content, root: data.data.root }}
+      slug={slug}
+    />
+  );
 }
