@@ -3,15 +3,12 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { cookies } from "next/headers";
 import axios from "axios";
+import { getUser } from "@/lib/getUser";
 
 const MainWrapper = async ({ children }) => {
   const cookieStore = await cookies();
-  const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_ORIGIN}/api/get-user`,
-    {
-      headers: { Cookie: cookieStore },
-    }
-  );
+  const data = getUser(cookieStore.toString());
+
   return (
     <div className="bg-black h-screen flex">
       {/* Sidebar */}

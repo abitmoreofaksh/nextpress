@@ -79,7 +79,7 @@ const Header = ({ user }) => {
           </div>
           <div>
             <div className="text-lg font-semibold text-white">
-              {user.user.username}
+              {user.username}
             </div>
             <div className="text-xs text-neutral-400">Admin</div>
           </div>
